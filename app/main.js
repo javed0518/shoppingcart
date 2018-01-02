@@ -1,30 +1,36 @@
 require.config({
-  paths: {
-    'jquery': 'assets/vendor/bower_components/jquery/dist/jquery',
-    'underscore': 'assets/vendor/bower_components/underscore/underscore',
-    'backbone': 'assets/vendor/bower_components/backbone/backbone',
-    'backbone.marionette': 'assets/vendor/bower_components/marionette/lib/backbone.marionette',
-    'handlebars':'assets/vendor/bower_components/handlebars/handlebars',
-    'hbars':'hbars'
-  },
-  shim: {
-    underscore: {
-      exports: '_'
+    paths: {
+        'jquery': 'assets/vendor/jquery/dist/jquery',
+        'underscore': 'assets/vendor/underscore/underscore',
+        'backbone': 'assets/vendor/backbone/backbone',
+        'backbone.marionette': 'assets/vendor/backbone.marionette/lib/backbone.marionette',
+        'backbone.radio': 'assets/vendor/backbone.radio/build/backbone.radio',
+        'handlebars': 'assets/vendor/handlebars/handlebars',
+        'hbars': 'hbars',
+        'requirejs': 'assets/vendor/requirejs/require',
+        'text': 'assets/vendor/text/text'
     },
-    handlebars: { exports: 'Handlebars' },
-    backbone: {
-      exports: 'Backbone',
-      deps: ['jquery', 'underscore']
+    shim: {
+        underscore: {
+            exports: '_'
+        },
+        handlebars: {exports: 'Handlebars'},
+        backbone: {
+            exports: 'Backbone',
+            deps: ['jquery', 'underscore']
+        },
+        marionette: {
+            exports: 'Backbone.Marionette',
+            deps: ['backbone']
+        }
     },
-    marionette: {
-      exports: 'Backbone.Marionette',
-      deps: ['backbone']
-    }
-  },
-  deps: ['jquery', 'underscore','']
+    deps: ['jquery', 'underscore', '']
 });
 
-require(['backbone.marionette'], function(Marionette) {
-	var app = new Marionette.Application();
-	app.start();
+require(['backbone', 'backbone.marionette', 'router'], function (Backbone, Marionette, Router) {
+    let app = new Marionette.Application();
+    app.start();
+
+    let appRouter = new Router();
+    Backbone.history.start();
 });
